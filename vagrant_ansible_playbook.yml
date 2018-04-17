@@ -1,0 +1,28 @@
+---
+- name: Install docker and some additional packages.
+  hosts: all
+  become: true
+
+
+  roles:
+    - role: angstwad.docker_ubuntu
+      docker_group_members: ["vagrant"]
+      kernel_update_and_reboot_permitted: yes
+
+      
+  tasks:
+    
+    - name: Install some debian packages.
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+        name:
+          - libnss-mdns           # for accessing it in mac by https://hostname.local/
+          - silversearcher-ag     # for emacs projectile
+          
+    - name: Add my key to authorized_keys to be able to ssh into it from emacs.
+      authorized_key:
+        user: vagrant
+        key: https://github.com/koddo.keys
+
+

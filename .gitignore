@@ -1,0 +1,9 @@
+*
+!Vagrantfile
+!vagrant_ansible_playbook.yml
+!vagrant_ansible_requirements.yml
+!docker-dropbox.sh
+!docker-yandex-disk.sh
+!Dockerfile_dropbox
+!Dockerfile_yandex-disk
+!.gitignore
