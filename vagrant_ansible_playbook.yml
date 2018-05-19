@@ -8,10 +8,19 @@
     - role: angstwad.docker_ubuntu
       docker_group_members: ["vagrant"]
       kernel_update_and_reboot_permitted: yes
-
+    - role: tersmitten.fail2ban      # https://galaxy.ansible.com/tersmitten/fail2ban/
+      fail2ban_services:
+        - name: basic-auth
+          port: 8443
+          filter: nginx-http-auth
+          logpath: /workspaces/superlearn.it/nginx-logs-fail2ban/*.log
+          maxretry: 3
+          bantime: 60
+          chain: FORWARD
+          # the chain is INPUT by default, but it fails to ban access to docker containers: http://www.sk4.co.uk/blog/2017/08/docker-and-fail2ban
+          # I'm not sure it's the best way to do this, but it's the shortest path; we could use this: https://docs.docker.com/network/iptables/#add-iptables-policies-before-dockers-rules, http://blog.amigapallo.org/2016/04/14/configuring-fail2ban-and-iptables-to-get-along-with-docker/
       
   tasks:
-    
     - name: Install some debian packages.
       apt:
         update_cache: true
@@ -19,10 +28,8 @@
         name:
           - libnss-mdns           # for accessing it in mac by https://hostname.local/
           - silversearcher-ag     # for emacs projectile
-          
     - name: Add my key to authorized_keys to be able to ssh into it from emacs.
       authorized_key:
         user: vagrant
         key: https://github.com/koddo.keys
-
 

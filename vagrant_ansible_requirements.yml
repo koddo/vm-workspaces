@@ -1,3 +1,4 @@
 ## $ ansible-galaxy install -r requirements.yml 
 
 - src: angstwad.docker_ubuntu
+- src: tersmitten.fail2ban
