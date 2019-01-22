@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# docker build -t koddo/dropbox - < Dockerfile_dropbox
+# docker build --no-cache -t koddo/dropbox - < Dockerfile_dropbox
 
 docker run -d \
        --name dropbox \
@@ -11,4 +11,5 @@ docker run -d \
 
 
 # docker logs --follow dropbox
+# docker logs --tail 50 dropbox
 
